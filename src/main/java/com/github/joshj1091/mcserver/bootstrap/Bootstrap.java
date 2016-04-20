@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Bootstrap {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         MCServer server = new MCServer();
 
         Scanner scanner = new Scanner(System.in);
