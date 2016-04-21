@@ -1,22 +1,20 @@
 package com.github.joshj1091.mcserver;
 
-import com.github.joshj1091.mcserver.protocol.Direction;
-import com.github.joshj1091.mcserver.protocol.Packet;
-import com.github.joshj1091.mcserver.util.DataInputUtil;
+import com.github.joshj1091.mcserver.connection.UserConnection;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MCServer {
 
     private static MCServer instance;
 
-    private Thread connectionThread;
     private ServerSocket serverSocket;
+    private boolean running = true;
+    private List<UserConnection> userConnections = new ArrayList<UserConnection>();
 
     public MCServer() throws Exception {
         instance = this;
@@ -24,60 +22,43 @@ public class MCServer {
 
         this.serverSocket = new ServerSocket(25565);
 
-        connectionThread = new Thread() {
+        log("Accepting connections");
+
+        new Thread() {
             @Override
             public void run() {
-                log("Now accepting connections");
-                try {
-                    Socket socket = serverSocket.accept(); // wait for new connection
-                    log("Accepted connection");
-
-                    DataInputStream inputStream = new DataInputStream(socket.getInputStream());
-
-                    int size = DataInputUtil.readUnsignedVarInt(inputStream);
-
-                    /*if (packetID == 0x00) {
-                        log("Minecraft Version: " + DataInputUtil.readUnsignedVarInt(inputStream));
-                        int stringBytes = DataInputUtil.readUnsignedVarInt(inputStream);
-                        log("String bytes: " + stringBytes);
-
-                        byte[] bytes = new byte[stringBytes];
-                        for (int i = 0; i < stringBytes; i++) {
-                            bytes[i] = inputStream.readByte();
-                        }
-
-                        log("Hostname: " + new String(bytes));
-                        log("Port: " + inputStream.readUnsignedShort());
-                        log("Next State: " + DataInputUtil.readUnsignedVarInt(inputStream));
-
-
-                        log("Handshake packet");
-                    }*/
-
-                    byte[] buffer = new byte[size];
-                    int read = inputStream.read(buffer);
-                    if (read < size) {
-                        error("Read too few bytes");
+                while (running) {
+                    try {
+                        final Socket socket = serverSocket.accept();
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+                                    userConnections.add(new UserConnection(socket));
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                        }.start();
+                    } catch (IOException ex) {
                         return;
-                    }
-                    int id = DataInputUtil.getUnsignedVarInt(buffer);
-
-                    Packet packet = new Packet(id, Arrays.copyOfRange(buffer, id + 1, buffer.length), Direction.SERVERBOUND);
-                } catch (IOException ex) {
-                    if (ex instanceof EOFException) {
-                        error("Reached end of stream");
-                    } else {
-                        error("IOException when accepting Socket");
-                        ex.printStackTrace();
                     }
                 }
             }
-        };
-
-        connectionThread.start();
+        }.start();
     }
 
-
+    public void stop() {
+        running = false;
+        try {
+            for (UserConnection connection : userConnections) {
+                connection.close();
+            }
+            serverSocket.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     public static MCServer getMCServer() {
         return instance;

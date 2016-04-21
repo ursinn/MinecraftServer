@@ -9,12 +9,21 @@ public class Bootstrap {
     public static void main(String[] args) throws Exception {
         MCServer server = new MCServer();
 
+        boolean run = true;
+
         Scanner scanner = new Scanner(System.in);
 
-        while (scanner.hasNext()) {
+        while (scanner.hasNext() && run) {
             String input = scanner.next();
 
-            server.log(input);
+            if (input.equalsIgnoreCase("exit")) {
+                run = false;
+                server.log("Stopping");
+                server.stop();
+                server.log("Closing now");
+                System.exit(0);
+            }
+
         }
     }
 }
