@@ -32,8 +32,7 @@ public class PingRequestPacket extends Packet {
     public PingRequestPacket(ByteReader reader, Direction direction) {
         super(reader.getData(), direction);
 
-        this.longBytes = new byte[8]; // long is always 8 bytes
-        Arrays.copyOfRange(reader.getData(), 1, getData().length);
+        this.longBytes = Arrays.copyOfRange(reader.getData(), 1, getData().length); // this should always be 8 bytes
     }
 
     /**
