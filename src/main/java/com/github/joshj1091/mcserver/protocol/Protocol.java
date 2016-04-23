@@ -12,25 +12,25 @@ public class Protocol {
      * @param id the id of the packet
      * @return the type of packet
      */
-    public static Packet getPacket(int state, Direction direction, ByteReader buffer, int id) {
+    public static Packet getPacket(int state, Direction direction, ByteReader reader, int id) {
         if (state == 0) {
             if (direction == Direction.SERVERBOUND) {
                 if (id == 0x00) {
-                    return new HandshakePacket(buffer, direction);
+                    return new HandshakePacket(reader, direction);
                 }
             }
         } else if (state == 1) {
             if (direction == Direction.SERVERBOUND) {
                 if (id == 0x00) {
-                    return new StatusRequestPacket(buffer, direction);
+                    return new StatusRequestPacket(reader, direction);
                 } else if (id == 0x01) {
-                    return new PingRequestPacket(buffer, direction);
+                    return new PingRequestPacket(reader, direction);
                 }
             }
         } else if (state == 2) {
             if (direction == Direction.SERVERBOUND) {
                 if (id == 0x00) {
-                    return new LoginStartPacket(buffer);
+                    return new LoginStartPacket(reader);
                 }
             }
         }

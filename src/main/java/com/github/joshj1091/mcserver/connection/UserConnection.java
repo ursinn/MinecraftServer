@@ -7,6 +7,7 @@ import com.github.joshj1091.mcserver.protocol.Protocol;
 import com.github.joshj1091.mcserver.protocol.packets.incoming.HandshakePacket;
 import com.github.joshj1091.mcserver.protocol.packets.incoming.LoginStartPacket;
 import com.github.joshj1091.mcserver.protocol.packets.incoming.PingRequestPacket;
+import com.github.joshj1091.mcserver.protocol.packets.outgoing.LoginDisconnectPacket;
 import com.github.joshj1091.mcserver.protocol.packets.outgoing.PongResponsePacket;
 import com.github.joshj1091.mcserver.protocol.packets.outgoing.StatusResponsePacket;
 import com.github.joshj1091.mcserver.util.ByteReader;
@@ -66,19 +67,13 @@ public class UserConnection {
                 server.log("Got status request");
 
                 StatusResponsePacket response = new StatusResponsePacket("1.9.0", 107, 50, 5, "Hello from Josh's server");
-                byte[] data = response.encode();
-
-                write(DataUtil.intToUnsignedVarInt(data.length)); // send the length of the byte array first so the client knows how much to read
-                write(data);
+                sendData(response.encode());
             } else if (packet.getId() == 0x01) {
                 server.log("Got ping request");
 
                 PingRequestPacket pingRequestPacket = (PingRequestPacket) packet;
                 PongResponsePacket response = new PongResponsePacket(pingRequestPacket.getLongBytes());
-
-                byte[] data = response.encode();
-                write(DataUtil.intToUnsignedVarInt(data.length));
-                write(data);
+                sendData(response.encode());
             }
         } else if (state == 2) {
             if (packet.getId() == 0x00) {
@@ -86,13 +81,17 @@ public class UserConnection {
                 LoginStartPacket loginStartPacket = (LoginStartPacket) packet;
                 server.log("Found name: " + loginStartPacket.getName());
 
-                try {
-                    socket.close();
-                } catch (IOException ex) {
-
-                }
+                LoginDisconnectPacket loginDisconnectPacket = new LoginDisconnectPacket("§4This server doesn't support logging in,§d " + loginStartPacket.getName());
+                sendData(loginDisconnectPacket.encode());
             }
         }
+    }
+
+    private void sendData(byte[] data) {
+        byte[] dataLength = DataUtil.intToUnsignedVarInt(data.length);
+
+        write(dataLength);
+        write(data);
     }
 
     private void write(byte[] data) {
