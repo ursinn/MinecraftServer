@@ -5,12 +5,12 @@ import com.github.joshj1091.mcserver.protocol.Direction;
 import com.github.joshj1091.mcserver.protocol.Packet;
 import com.github.joshj1091.mcserver.protocol.Protocol;
 import com.github.joshj1091.mcserver.protocol.packets.HandshakePacket;
+import com.github.joshj1091.mcserver.util.ByteReader;
 import com.github.joshj1091.mcserver.util.DataInputUtil;
 
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.Arrays;
 
 public class UserConnection {
 
@@ -30,10 +30,10 @@ public class UserConnection {
             int size = DataInputUtil.readUnsignedVarInt(inputStream);
             byte[] buffer = new byte[size];
             inputStream.readFully(buffer);
-            int id = DataInputUtil.getUnsignedVarInt(buffer);
+            ByteReader reader = new ByteReader(buffer);
+            int id = DataInputUtil.readUnsignedVarInt(reader);
 
-
-            Packet packet = Protocol.getPacket(state, Direction.SERVERBOUND, Arrays.copyOfRange(buffer, id + 1, buffer.length), id);
+            Packet packet = Protocol.getPacket(state, Direction.SERVERBOUND, reader, id);
             handlePacket(packet);
         }
     }

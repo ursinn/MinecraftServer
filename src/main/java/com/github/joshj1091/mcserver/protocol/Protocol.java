@@ -1,6 +1,7 @@
 package com.github.joshj1091.mcserver.protocol;
 
 import com.github.joshj1091.mcserver.protocol.packets.HandshakePacket;
+import com.github.joshj1091.mcserver.util.ByteReader;
 
 public class Protocol {
 
@@ -11,7 +12,7 @@ public class Protocol {
      * @param id the id of the packet
      * @return the type of packet
      */
-    public static Packet getPacket(int state, Direction direction, byte[] buffer, int id) {
+    public static Packet getPacket(int state, Direction direction, ByteReader buffer, int id) {
         if (state == 0) {
             if (direction == Direction.SERVERBOUND) {
                 if (id == 0x00) {

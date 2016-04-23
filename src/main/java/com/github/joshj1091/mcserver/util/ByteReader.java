@@ -20,4 +20,8 @@ public class ByteReader {
     public byte next() {
         return buffer[currentPos++];
     }
+
+    public byte[] getData() {
+        return buffer;
+    }
 }

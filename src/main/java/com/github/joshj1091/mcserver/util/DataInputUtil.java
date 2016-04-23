@@ -51,7 +51,7 @@ public class DataInputUtil {
         return value | data << iterations * 7;
     }
 
-    public static int readUnsignedInt(ByteReader reader) {
+    public static int readUnsignedVarInt(ByteReader reader) {
         int iterations = 0;
         int data;
         int value = 0;
@@ -73,7 +73,7 @@ public class DataInputUtil {
     }
 
     public static String readString(ByteReader reader) throws IllegalArgumentException {
-        int bytes = readUnsignedInt(reader);
+        int bytes = readUnsignedVarInt(reader);
 
         if (bytes == -1) {
             return "Error";
@@ -97,12 +97,13 @@ public class DataInputUtil {
         if (!reader.hasNext()) {
             throw new IllegalArgumentException("Reader had too few bytes");
         }
-        byte first = reader.next();
+        int first = reader.next() & 0xFF; // have to and with 0xFF (255) because Java bytes are signed (we only want unsigned values)
+
 
         if (!reader.hasNext()) {
             throw new IllegalArgumentException("Reader had too few bytes");
         }
-        byte second = reader.next();
+        int second = reader.next() & 0xFF;
 
         return (first << 8) + second;
     }

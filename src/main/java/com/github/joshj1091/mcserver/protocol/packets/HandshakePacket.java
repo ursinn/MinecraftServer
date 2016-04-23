@@ -15,14 +15,13 @@ public class HandshakePacket extends Packet {
     private final int serverPort;
     private final int nextState;
 
-    public HandshakePacket(byte[] data, Direction direction) {
-        super(data, direction);
+    public HandshakePacket(ByteReader reader, Direction direction) {
+        super(reader.getData(), direction);
 
-        ByteReader reader = new ByteReader(data);
-        protocolVersion = DataInputUtil.readUnsignedInt(reader);
+        protocolVersion = DataInputUtil.readUnsignedVarInt(reader);
         serverAddress = DataInputUtil.readString(reader);
         serverPort = DataInputUtil.readUnsignedShort(reader);
-        nextState = DataInputUtil.readUnsignedInt(reader);
+        nextState = DataInputUtil.readUnsignedVarInt(reader);
     }
 
     public int getProtocolVersion() {
