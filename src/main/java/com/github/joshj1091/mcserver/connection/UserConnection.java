@@ -5,10 +5,12 @@ import com.github.joshj1091.mcserver.protocol.Direction;
 import com.github.joshj1091.mcserver.protocol.Packet;
 import com.github.joshj1091.mcserver.protocol.Protocol;
 import com.github.joshj1091.mcserver.protocol.packets.HandshakePacket;
+import com.github.joshj1091.mcserver.protocol.packets.StatusResponsePacket;
 import com.github.joshj1091.mcserver.util.ByteReader;
 import com.github.joshj1091.mcserver.util.DataInputUtil;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -61,7 +63,16 @@ public class UserConnection {
             if (packet.getId() == 0x00) { // status request
                 server.log("Got status request");
 
-                int id = 0x00;
+                StatusResponsePacket response = new StatusResponsePacket("1.9.2", 109, 50, 5, "Hello from Java!");
+                byte[] byteArray = response.encode();
+
+
+                try {
+                    socket.getOutputStream().write(DataInputUtil.intToUnsignedVarInt(byteArray.length));
+                    socket.getOutputStream().write(byteArray);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
 
             } else if (packet.getId() == 0x01) {
                 server.log("Got ping request");
