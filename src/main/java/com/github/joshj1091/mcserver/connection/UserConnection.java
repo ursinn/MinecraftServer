@@ -53,15 +53,15 @@ public class UserConnection {
 
     private void handlePacket(Packet packet) {
         if (state == 0) {
-            if (packet.getId() == 0x00) {
-                server.log("Found handshake packet");
+            if (packet.getId() == 0x00) { // handshake packet
                 HandshakePacket handshakePacket = (HandshakePacket) packet;
-                server.log("Protocol Version: " + handshakePacket.getProtocolVersion());
-                server.log("Server Address: " + handshakePacket.getServerAddress());
-                server.log("Server port: " + handshakePacket.getServerPort());
-                server.log("Next state: " + handshakePacket.getNextState());
-
                 this.state = handshakePacket.getNextState();
+            }
+        } else if (state == 1) {
+            if (packet.getId() == 0x00) { // status request
+                server.log("Got status request");
+            } else if (packet.getId() == 0x01) {
+                server.log("Got ping request");
             }
         }
     }

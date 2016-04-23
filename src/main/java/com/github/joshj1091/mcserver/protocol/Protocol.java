@@ -1,6 +1,8 @@
 package com.github.joshj1091.mcserver.protocol;
 
 import com.github.joshj1091.mcserver.protocol.packets.HandshakePacket;
+import com.github.joshj1091.mcserver.protocol.packets.PingRequestPacket;
+import com.github.joshj1091.mcserver.protocol.packets.StatusRequestPacket;
 import com.github.joshj1091.mcserver.util.ByteReader;
 
 public class Protocol {
@@ -20,6 +22,13 @@ public class Protocol {
                 }
             }
         } else if (state == 1) {
+            if (direction == Direction.SERVERBOUND) {
+                if (id == 0x00) {
+                    return new StatusRequestPacket(buffer, direction);
+                } else if (id == 0x01) {
+                    return new PingRequestPacket(buffer, direction);
+                }
+            }
         }
 
         return null;
