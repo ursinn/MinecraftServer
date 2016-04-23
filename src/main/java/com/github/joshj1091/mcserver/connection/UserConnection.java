@@ -4,10 +4,10 @@ import com.github.joshj1091.mcserver.MCServer;
 import com.github.joshj1091.mcserver.protocol.Direction;
 import com.github.joshj1091.mcserver.protocol.Packet;
 import com.github.joshj1091.mcserver.protocol.Protocol;
-import com.github.joshj1091.mcserver.protocol.packets.HandshakePacket;
-import com.github.joshj1091.mcserver.protocol.packets.PingRequestPacket;
-import com.github.joshj1091.mcserver.protocol.packets.PongResponsePacket;
-import com.github.joshj1091.mcserver.protocol.packets.StatusResponsePacket;
+import com.github.joshj1091.mcserver.protocol.packets.incoming.HandshakePacket;
+import com.github.joshj1091.mcserver.protocol.packets.incoming.PingRequestPacket;
+import com.github.joshj1091.mcserver.protocol.packets.outgoing.PongResponsePacket;
+import com.github.joshj1091.mcserver.protocol.packets.outgoing.StatusResponsePacket;
 import com.github.joshj1091.mcserver.util.ByteReader;
 import com.github.joshj1091.mcserver.util.DataUtil;
 

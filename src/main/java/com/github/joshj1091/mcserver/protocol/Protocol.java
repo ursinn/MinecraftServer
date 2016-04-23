@@ -1,8 +1,8 @@
 package com.github.joshj1091.mcserver.protocol;
 
-import com.github.joshj1091.mcserver.protocol.packets.HandshakePacket;
-import com.github.joshj1091.mcserver.protocol.packets.PingRequestPacket;
-import com.github.joshj1091.mcserver.protocol.packets.StatusRequestPacket;
+import com.github.joshj1091.mcserver.protocol.packets.incoming.HandshakePacket;
+import com.github.joshj1091.mcserver.protocol.packets.incoming.PingRequestPacket;
+import com.github.joshj1091.mcserver.protocol.packets.incoming.StatusRequestPacket;
 import com.github.joshj1091.mcserver.util.ByteReader;
 
 public class Protocol {

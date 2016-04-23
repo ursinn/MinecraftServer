@@ -1,4 +1,4 @@
-package com.github.joshj1091.mcserver.protocol.packets;
+package com.github.joshj1091.mcserver.protocol.packets.incoming;
 
 import com.github.joshj1091.mcserver.protocol.Direction;
 import com.github.joshj1091.mcserver.protocol.Packet;
