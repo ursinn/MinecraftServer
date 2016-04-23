@@ -20,6 +20,19 @@ public class UserConnection {
 
     private int state;
 
+    /**
+     *
+     * Standard Packet Format
+     *
+     * | Field            | Data Type      |
+     * -------------------------------------
+     * | Packet Size      | VarInt         |
+     * | Packet ID        | VarInt         |
+     * | Data             | Byte Array     |
+     *
+     * @param socket the connection socket
+     * @throws IOException if there are any I/O errors
+     */
     public UserConnection(final Socket socket) throws IOException {
         this.socket = socket;
         this.state = 0;

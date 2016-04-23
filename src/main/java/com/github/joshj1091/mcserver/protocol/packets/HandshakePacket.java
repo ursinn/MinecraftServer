@@ -7,6 +7,25 @@ import com.github.joshj1091.mcserver.util.DataInputUtil;
 
 /**
  * This class represents the handshake packet
+ *
+ * Standard Packet Format
+ *
+ * | Field            | Data Type      |
+ * -------------------------------------
+ * | Packet Size      | VarInt         |
+ * | Packet ID        | VarInt         |
+ * | Data             | Byte Array     |
+ *
+ *
+ * Handshake Data Format
+ *
+ * | Field            | Data Type      |
+ * -------------------------------------
+ * | Protocol Version | VarInt         |
+ * | Server Address   | String         |
+ * | Server Port      | Unsigned Short |
+ * | Next State       | VarInt         |
+ *
  */
 public class HandshakePacket extends Packet {
 
