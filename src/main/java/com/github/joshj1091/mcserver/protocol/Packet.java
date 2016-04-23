@@ -24,4 +24,8 @@ public class Packet {
         return direction;
     }
 
+    public enum Type {
+        HANDSHAKE, STATUS_REQUEST, STATUS_PONG;
+    }
+
 }

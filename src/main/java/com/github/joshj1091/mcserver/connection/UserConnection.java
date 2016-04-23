@@ -3,6 +3,7 @@ package com.github.joshj1091.mcserver.connection;
 import com.github.joshj1091.mcserver.MCServer;
 import com.github.joshj1091.mcserver.protocol.Direction;
 import com.github.joshj1091.mcserver.protocol.Packet;
+import com.github.joshj1091.mcserver.protocol.Protocol;
 import com.github.joshj1091.mcserver.util.DataInputUtil;
 
 import java.io.DataInputStream;
@@ -16,8 +17,11 @@ public class UserConnection {
     private Socket socket;
     private boolean acceptData;
 
+    private int state;
+
     public UserConnection(final Socket socket) throws IOException {
         this.socket = socket;
+        this.state = 0;
 
         server.log("Accepted connection from " + socket.getInetAddress().toString());
         DataInputStream inputStream = new DataInputStream(socket.getInputStream());
@@ -33,7 +37,21 @@ public class UserConnection {
     }
 
     private void handlePacket(Packet packet) {
+        Packet.Type type = Protocol.getPacketType(state, packet.getDirection(), packet.getId());
 
+        server.log(type + "");
+    }
+
+    /**
+     * Set the protocol state
+     * @param state
+     */
+    private void setState(int state) {
+        this.state = state;
+    }
+
+    private int getState() {
+        return state;
     }
 
     public void close() throws IOException {
