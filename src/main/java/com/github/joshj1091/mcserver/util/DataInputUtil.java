@@ -71,4 +71,39 @@ public class DataInputUtil {
 
         return value | data << iterations * 7;
     }
+
+    public static String readString(ByteReader reader) throws IllegalArgumentException {
+        int bytes = readUnsignedInt(reader);
+
+        if (bytes == -1) {
+            return "Error";
+        }
+
+        byte[] stringBytes = new byte[bytes];
+        for (int i = 0; i < bytes; i++) {
+            if (reader.hasNext()) {
+                stringBytes[i] = reader.next();
+            } else {
+                MCServer.getMCServer().log("Too few bytes here");
+                throw new IllegalArgumentException("Reader had too few bytes");
+            }
+        }
+
+        return new String(stringBytes);
+    }
+
+    public static int readUnsignedShort(ByteReader reader) throws IllegalArgumentException {
+
+        if (!reader.hasNext()) {
+            throw new IllegalArgumentException("Reader had too few bytes");
+        }
+        byte first = reader.next();
+
+        if (!reader.hasNext()) {
+            throw new IllegalArgumentException("Reader had too few bytes");
+        }
+        byte second = reader.next();
+
+        return (first << 8) + second;
+    }
 }

@@ -13,6 +13,10 @@ public class ByteReader {
         return currentPos <= buffer.length;
     }
 
+    public int getCurrentPos() {
+        return currentPos;
+    }
+
     public byte next() {
         return buffer[currentPos++];
     }

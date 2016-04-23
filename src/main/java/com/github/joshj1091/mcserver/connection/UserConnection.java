@@ -32,16 +32,24 @@ public class UserConnection {
             inputStream.readFully(buffer);
             int id = DataInputUtil.getUnsignedVarInt(buffer);
 
+
             Packet packet = Protocol.getPacket(state, Direction.SERVERBOUND, Arrays.copyOfRange(buffer, id + 1, buffer.length), id);
             handlePacket(packet);
         }
     }
 
     private void handlePacket(Packet packet) {
-        if (packet.getId() == 0x00) {
-            server.log("Found handshake packet");
-            HandshakePacket handshakePacket = (HandshakePacket) packet;
+        if (state == 0) {
+            if (packet.getId() == 0x00) {
+                server.log("Found handshake packet");
+                HandshakePacket handshakePacket = (HandshakePacket) packet;
+                server.log("Protocol Version: " + handshakePacket.getProtocolVersion());
+                server.log("Server Address: " + handshakePacket.getServerAddress());
+                server.log("Server port: " + handshakePacket.getServerPort());
+                server.log("Next state: " + handshakePacket.getNextState());
 
+                this.state = handshakePacket.getNextState();
+            }
         }
     }
 

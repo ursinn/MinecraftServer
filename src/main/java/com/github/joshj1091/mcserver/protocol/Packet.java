@@ -1,7 +1,5 @@
 package com.github.joshj1091.mcserver.protocol;
 
-import com.github.joshj1091.mcserver.MCServer;
-
 public abstract class Packet {
 
     private byte[] buffer;
@@ -22,24 +20,4 @@ public abstract class Packet {
         return direction;
     }
 
-    public int getUnsignedVarInt() {
-        int iterations = 0;
-        int data;
-        int value = 0;
-
-        while (((data = buffer[iterations]) & 0x80) != 0) {
-            int realValue = data & 0x75 << iterations * 7;
-            value |= realValue;
-            iterations++;
-
-            if (iterations > 5) {
-                MCServer.getMCServer().error("Too many bits received while reading unsigned var int");
-                return -1;
-            }
-        }
-
-
-
-        return value | data << iterations * 7;
-    }
 }
