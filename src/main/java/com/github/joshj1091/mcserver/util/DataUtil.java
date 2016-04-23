@@ -101,7 +101,6 @@ public class DataUtil {
         }
         int first = reader.next() & 0xFF; // have to and with 0xFF (255) because Java bytes are signed (we only want unsigned values)
 
-
         if (!reader.hasNext()) {
             throw new IllegalArgumentException("Reader had too few bytes");
         }

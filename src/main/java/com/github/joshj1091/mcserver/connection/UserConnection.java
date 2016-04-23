@@ -67,8 +67,7 @@ public class UserConnection {
                 StatusResponsePacket response = new StatusResponsePacket("1.9.0", 107, 50, 5, "Hello from Josh's server");
                 byte[] data = response.encode();
 
-
-                write(DataUtil.intToUnsignedVarInt(data.length));
+                write(DataUtil.intToUnsignedVarInt(data.length)); // send the length of the byte array first so the client knows how much to read
                 write(data);
             } else if (packet.getId() == 0x01) {
                 server.log("Got ping request");
@@ -77,7 +76,6 @@ public class UserConnection {
                 PongResponsePacket response = new PongResponsePacket(pingRequestPacket.getLongBytes());
 
                 byte[] data = response.encode();
-
                 write(DataUtil.intToUnsignedVarInt(data.length));
                 write(data);
             }
