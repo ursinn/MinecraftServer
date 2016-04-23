@@ -9,6 +9,13 @@ import com.google.gson.JsonObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+
+/**
+ * This class represents the clientbound status response packet.
+ *
+ * More details on this packet can be found here:
+ * http://wiki.vg/Server_List_Ping
+ */
 public class StatusResponsePacket extends Packet {
 
     private String versionName;
@@ -27,6 +34,11 @@ public class StatusResponsePacket extends Packet {
         this.descriptionText = descriptionText;
     }
 
+    /**
+     * This produces a byte array that contains the packet id, the number of bytes in the json string,
+     * and the json string.
+     * @return byte array
+     */
     public byte[] encode() {
 
         JsonObject payload = new JsonObject();
@@ -53,11 +65,11 @@ public class StatusResponsePacket extends Packet {
 
         byte[] jsonLength = DataInputUtil.intToUnsignedVarInt(jsonBytes.length);
 
-        byte[] protocolVersion = DataInputUtil.intToUnsignedVarInt(getId());
+        byte[] packetId = DataInputUtil.intToUnsignedVarInt(getId());
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            outputStream.write(protocolVersion);
+            outputStream.write(packetId);
             outputStream.write(jsonLength);
             outputStream.write(jsonBytes);
         } catch (IOException ex) {

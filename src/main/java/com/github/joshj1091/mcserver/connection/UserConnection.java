@@ -5,12 +5,13 @@ import com.github.joshj1091.mcserver.protocol.Direction;
 import com.github.joshj1091.mcserver.protocol.Packet;
 import com.github.joshj1091.mcserver.protocol.Protocol;
 import com.github.joshj1091.mcserver.protocol.packets.HandshakePacket;
+import com.github.joshj1091.mcserver.protocol.packets.PingRequestPacket;
+import com.github.joshj1091.mcserver.protocol.packets.PongResponsePacket;
 import com.github.joshj1091.mcserver.protocol.packets.StatusResponsePacket;
 import com.github.joshj1091.mcserver.util.ByteReader;
 import com.github.joshj1091.mcserver.util.DataInputUtil;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -67,19 +68,27 @@ public class UserConnection {
                 byte[] byteArray = response.encode();
 
 
-                try {
-                    socket.getOutputStream().write(DataInputUtil.intToUnsignedVarInt(byteArray.length));
-                    socket.getOutputStream().write(byteArray);
-
-                    server.log("Sent status response");
-                } catch (IOException ex) {
-                    server.error("Failed to send status response");
-                    ex.printStackTrace();
-                }
-
+                write(DataInputUtil.intToUnsignedVarInt(byteArray.length));
+                write(byteArray);
             } else if (packet.getId() == 0x01) {
                 server.log("Got ping request");
+
+                PingRequestPacket pingRequestPacket = (PingRequestPacket) packet;
+                PongResponsePacket response = new PongResponsePacket(pingRequestPacket.getLongBytes());
+
+                byte[] data = response.encode();
+
+                write(DataInputUtil.intToUnsignedVarInt(data.length));
+                write(data);
             }
+        }
+    }
+
+    private void write(byte[] data) {
+        try {
+            socket.getOutputStream().write(data);
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 
