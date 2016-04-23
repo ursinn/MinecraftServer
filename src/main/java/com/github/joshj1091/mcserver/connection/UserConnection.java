@@ -5,6 +5,7 @@ import com.github.joshj1091.mcserver.protocol.Direction;
 import com.github.joshj1091.mcserver.protocol.Packet;
 import com.github.joshj1091.mcserver.protocol.Protocol;
 import com.github.joshj1091.mcserver.protocol.packets.incoming.HandshakePacket;
+import com.github.joshj1091.mcserver.protocol.packets.incoming.LoginStartPacket;
 import com.github.joshj1091.mcserver.protocol.packets.incoming.PingRequestPacket;
 import com.github.joshj1091.mcserver.protocol.packets.outgoing.PongResponsePacket;
 import com.github.joshj1091.mcserver.protocol.packets.outgoing.StatusResponsePacket;
@@ -78,6 +79,18 @@ public class UserConnection {
                 byte[] data = response.encode();
                 write(DataUtil.intToUnsignedVarInt(data.length));
                 write(data);
+            }
+        } else if (state == 2) {
+            if (packet.getId() == 0x00) {
+                server.log("Login start packet");
+                LoginStartPacket loginStartPacket = (LoginStartPacket) packet;
+                server.log("Found name: " + loginStartPacket.getName());
+
+                try {
+                    socket.close();
+                } catch (IOException ex) {
+
+                }
             }
         }
     }

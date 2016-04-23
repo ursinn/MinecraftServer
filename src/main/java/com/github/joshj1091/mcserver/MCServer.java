@@ -5,6 +5,7 @@ import com.github.joshj1091.mcserver.connection.UserConnection;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class MCServer {
 
@@ -35,6 +36,8 @@ public class MCServer {
                                 } catch (IOException ex) {
                                     if (ex instanceof EOFException) {
                                         log("Connection terminated");
+                                    } else if (ex instanceof SocketException) {
+                                        log("Socket closed");
                                     } else {
                                         ex.printStackTrace();
                                     }
