@@ -65,11 +65,11 @@ public class UserConnection {
                 server.log("Got status request");
 
                 StatusResponsePacket response = new StatusResponsePacket("1.9.2", 109, 50, 5, "Hello from Java!");
-                byte[] byteArray = response.encode();
+                byte[] data = response.encode();
 
 
-                write(DataInputUtil.intToUnsignedVarInt(byteArray.length));
-                write(byteArray);
+                write(DataInputUtil.intToUnsignedVarInt(data.length));
+                write(data);
             } else if (packet.getId() == 0x01) {
                 server.log("Got ping request");
 
