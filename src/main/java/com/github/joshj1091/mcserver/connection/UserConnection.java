@@ -70,7 +70,10 @@ public class UserConnection {
                 try {
                     socket.getOutputStream().write(DataInputUtil.intToUnsignedVarInt(byteArray.length));
                     socket.getOutputStream().write(byteArray);
+
+                    server.log("Sent status response");
                 } catch (IOException ex) {
+                    server.error("Failed to send status response");
                     ex.printStackTrace();
                 }
 
