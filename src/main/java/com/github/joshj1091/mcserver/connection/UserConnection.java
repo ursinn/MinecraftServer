@@ -64,7 +64,7 @@ public class UserConnection {
             if (packet.getId() == 0x00) { // status request
                 server.log("Got status request");
 
-                StatusResponsePacket response = new StatusResponsePacket("1.9.2", 109, 50, 5, "Hello from Josh's server");
+                StatusResponsePacket response = new StatusResponsePacket("1.9.0", 107, 50, 5, "Hello from Josh's server");
                 byte[] data = response.encode();
 
 
