@@ -10,6 +10,10 @@ public abstract class Packet {
         this.direction = direction;
     }
 
+    public Packet(Direction direction) {
+        this.direction = direction;
+    }
+
     public abstract int getId();
 
     public byte[] getData() {

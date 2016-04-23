@@ -4,6 +4,8 @@ import com.github.joshj1091.mcserver.MCServer;
 
 import java.io.DataInput;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataInputUtil {
 
@@ -106,5 +108,23 @@ public class DataInputUtil {
         int second = reader.next() & 0xFF;
 
         return (first << 8) + second;
+    }
+
+    public static byte[] intToUnsignedVarInt(int value) {
+        List<Byte> byteList = new ArrayList<Byte>();
+
+        while ((value & 0xFFFFFF80) != 0L) {
+            byteList.add((byte)((value & 0x7F) | 0x80));
+            value >>>= 7;
+        }
+        byteList.add((byte)(value & 0x7F));
+
+        byte[] bytes = new byte[byteList.size()];
+
+        for (int i = 0; i < byteList.size(); i++) {
+            bytes[i] = byteList.get(i);
+        }
+
+        return bytes;
     }
 }

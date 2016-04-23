@@ -8,6 +8,15 @@
     <artifactId>mcserver</artifactId>
     <version>0.1.0-SNAPSHOT</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20090211</version>
+        </dependency>
+
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>

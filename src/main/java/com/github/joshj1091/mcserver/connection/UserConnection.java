@@ -60,6 +60,9 @@ public class UserConnection {
         } else if (state == 1) {
             if (packet.getId() == 0x00) { // status request
                 server.log("Got status request");
+
+                int id = 0x00;
+
             } else if (packet.getId() == 0x01) {
                 server.log("Got ping request");
             }
