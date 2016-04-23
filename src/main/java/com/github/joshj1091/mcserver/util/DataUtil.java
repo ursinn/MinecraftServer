@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataInputUtil {
+public class DataUtil {
 
     /**
      * Read an unsigned varint

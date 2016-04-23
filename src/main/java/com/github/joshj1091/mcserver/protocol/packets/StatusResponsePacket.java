@@ -2,7 +2,7 @@ package com.github.joshj1091.mcserver.protocol.packets;
 
 import com.github.joshj1091.mcserver.protocol.Direction;
 import com.github.joshj1091.mcserver.protocol.Packet;
-import com.github.joshj1091.mcserver.util.DataInputUtil;
+import com.github.joshj1091.mcserver.util.DataUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -63,9 +63,9 @@ public class StatusResponsePacket extends Packet {
         Gson gson = new Gson();
         byte[] jsonBytes = gson.toJson(payload).getBytes();
 
-        byte[] jsonLength = DataInputUtil.intToUnsignedVarInt(jsonBytes.length);
+        byte[] jsonLength = DataUtil.intToUnsignedVarInt(jsonBytes.length);
 
-        byte[] packetId = DataInputUtil.intToUnsignedVarInt(getId());
+        byte[] packetId = DataUtil.intToUnsignedVarInt(getId());
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {

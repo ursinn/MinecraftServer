@@ -3,7 +3,7 @@ package com.github.joshj1091.mcserver.protocol.packets;
 import com.github.joshj1091.mcserver.protocol.Direction;
 import com.github.joshj1091.mcserver.protocol.Packet;
 import com.github.joshj1091.mcserver.util.ByteReader;
-import com.github.joshj1091.mcserver.util.DataInputUtil;
+import com.github.joshj1091.mcserver.util.DataUtil;
 
 /**
  * This class represents the handshake packet
@@ -37,10 +37,10 @@ public class HandshakePacket extends Packet {
     public HandshakePacket(ByteReader reader, Direction direction) {
         super(reader.getData(), direction);
 
-        protocolVersion = DataInputUtil.readUnsignedVarInt(reader);
-        serverAddress = DataInputUtil.readString(reader);
-        serverPort = DataInputUtil.readUnsignedShort(reader);
-        nextState = DataInputUtil.readUnsignedVarInt(reader);
+        protocolVersion = DataUtil.readUnsignedVarInt(reader);
+        serverAddress = DataUtil.readString(reader);
+        serverPort = DataUtil.readUnsignedShort(reader);
+        nextState = DataUtil.readUnsignedVarInt(reader);
     }
 
     public int getProtocolVersion() {

@@ -2,7 +2,7 @@ package com.github.joshj1091.mcserver.protocol.packets;
 
 import com.github.joshj1091.mcserver.protocol.Direction;
 import com.github.joshj1091.mcserver.protocol.Packet;
-import com.github.joshj1091.mcserver.util.DataInputUtil;
+import com.github.joshj1091.mcserver.util.DataUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -35,7 +35,7 @@ public class PongResponsePacket extends Packet {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         try {
-            outputStream.write(DataInputUtil.intToUnsignedVarInt(getId()));
+            outputStream.write(DataUtil.intToUnsignedVarInt(getId()));
             outputStream.write(longBytes);
         } catch (IOException ex) {
             ex.printStackTrace();

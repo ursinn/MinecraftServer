@@ -9,7 +9,7 @@ import com.github.joshj1091.mcserver.protocol.packets.PingRequestPacket;
 import com.github.joshj1091.mcserver.protocol.packets.PongResponsePacket;
 import com.github.joshj1091.mcserver.protocol.packets.StatusResponsePacket;
 import com.github.joshj1091.mcserver.util.ByteReader;
-import com.github.joshj1091.mcserver.util.DataInputUtil;
+import com.github.joshj1091.mcserver.util.DataUtil;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -43,11 +43,11 @@ public class UserConnection {
         server.log("Accepted connection from " + socket.getInetAddress().toString());
         DataInputStream inputStream = new DataInputStream(socket.getInputStream());
         while (acceptData) {
-            int size = DataInputUtil.readUnsignedVarInt(inputStream);
+            int size = DataUtil.readUnsignedVarInt(inputStream);
             byte[] buffer = new byte[size];
             inputStream.readFully(buffer);
             ByteReader reader = new ByteReader(buffer);
-            int id = DataInputUtil.readUnsignedVarInt(reader);
+            int id = DataUtil.readUnsignedVarInt(reader);
 
             Packet packet = Protocol.getPacket(state, Direction.SERVERBOUND, reader, id);
             handlePacket(packet);
@@ -68,7 +68,7 @@ public class UserConnection {
                 byte[] data = response.encode();
 
 
-                write(DataInputUtil.intToUnsignedVarInt(data.length));
+                write(DataUtil.intToUnsignedVarInt(data.length));
                 write(data);
             } else if (packet.getId() == 0x01) {
                 server.log("Got ping request");
@@ -78,7 +78,7 @@ public class UserConnection {
 
                 byte[] data = response.encode();
 
-                write(DataInputUtil.intToUnsignedVarInt(data.length));
+                write(DataUtil.intToUnsignedVarInt(data.length));
                 write(data);
             }
         }
