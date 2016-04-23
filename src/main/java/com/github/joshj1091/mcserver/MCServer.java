@@ -14,7 +14,6 @@ public class MCServer {
 
     private ServerSocket serverSocket;
     private boolean running = true;
-    private List<UserConnection> userConnections = new ArrayList<UserConnection>();
 
     public MCServer() throws Exception {
         instance = this;
@@ -33,10 +32,8 @@ public class MCServer {
                         new Thread() {
                             @Override
                             public void run() {
-                                UserConnection connection = null;
                                 try {
-                                    connection = new UserConnection(socket);
-                                    userConnections.add(connection);
+                                    new UserConnection(socket);
                                 } catch (IOException ex) {
                                     if (ex instanceof EOFException) {
                                         log("Connection terminated");
@@ -57,9 +54,6 @@ public class MCServer {
     public void stop() {
         running = false;
         try {
-            for (UserConnection connection : userConnections) {
-                connection.close();
-            }
             serverSocket.close();
         } catch (IOException ex) {
             ex.printStackTrace();
