@@ -33,10 +33,16 @@ public class MCServer {
                         new Thread() {
                             @Override
                             public void run() {
+                                UserConnection connection = null;
                                 try {
-                                    userConnections.add(new UserConnection(socket));
+                                    connection = new UserConnection(socket);
+                                    userConnections.add(connection);
                                 } catch (IOException ex) {
-                                    ex.printStackTrace();
+                                    if (ex instanceof EOFException) {
+                                        log("Connection terminated");
+                                    } else {
+                                        ex.printStackTrace();
+                                    }
                                 }
                             }
                         }.start();

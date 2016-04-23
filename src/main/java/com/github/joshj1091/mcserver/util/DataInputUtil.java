@@ -50,4 +50,25 @@ public class DataInputUtil {
 
         return value | data << iterations * 7;
     }
+
+    public static int readUnsignedInt(ByteReader reader) {
+        int iterations = 0;
+        int data;
+        int value = 0;
+
+        while (((data = reader.next()) & 0x80) != 0) {
+            int realValue = data & 0x75 << iterations * 7;
+            value |= realValue;
+            iterations++;
+
+            if (iterations > 5) {
+                MCServer.getMCServer().error("Too many bits received while reading unsigned var int");
+                return -1;
+            } else if (!reader.hasNext()) {
+                MCServer.getMCServer().error("Too few bits received while reading unsigned var int");
+            }
+        }
+
+        return value | data << iterations * 7;
+    }
 }

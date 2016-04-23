@@ -4,6 +4,7 @@ import com.github.joshj1091.mcserver.MCServer;
 import com.github.joshj1091.mcserver.protocol.Direction;
 import com.github.joshj1091.mcserver.protocol.Packet;
 import com.github.joshj1091.mcserver.protocol.Protocol;
+import com.github.joshj1091.mcserver.protocol.packets.HandshakePacket;
 import com.github.joshj1091.mcserver.util.DataInputUtil;
 
 import java.io.DataInputStream;
@@ -15,7 +16,7 @@ public class UserConnection {
 
     private final MCServer server = MCServer.getMCServer();
     private Socket socket;
-    private boolean acceptData;
+    private boolean acceptData = true;
 
     private int state;
 
@@ -31,15 +32,17 @@ public class UserConnection {
             inputStream.readFully(buffer);
             int id = DataInputUtil.getUnsignedVarInt(buffer);
 
-            Packet packet = new Packet(id, Arrays.copyOfRange(buffer, id + 1, buffer.length), Direction.SERVERBOUND);
+            Packet packet = Protocol.getPacket(state, Direction.SERVERBOUND, Arrays.copyOfRange(buffer, id + 1, buffer.length), id);
             handlePacket(packet);
         }
     }
 
     private void handlePacket(Packet packet) {
-        Packet.Type type = Protocol.getPacketType(state, packet.getDirection(), packet.getId());
+        if (packet.getId() == 0x00) {
+            server.log("Found handshake packet");
+            HandshakePacket handshakePacket = (HandshakePacket) packet;
 
-        server.log(type + "");
+        }
     }
 
     /**
