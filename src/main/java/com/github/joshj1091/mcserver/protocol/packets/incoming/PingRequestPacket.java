@@ -1,7 +1,6 @@
 package com.github.joshj1091.mcserver.protocol.packets.incoming;
 
-import com.github.joshj1091.mcserver.protocol.Direction;
-import com.github.joshj1091.mcserver.protocol.Packet;
+import com.github.joshj1091.mcserver.protocol.IncomingPacket;
 import com.github.joshj1091.mcserver.util.ByteReader;
 
 import java.util.Arrays;
@@ -25,12 +24,12 @@ import java.util.Arrays;
  * | Long             | Long           |
  *
  */
-public class PingRequestPacket extends Packet {
+public class PingRequestPacket extends IncomingPacket {
 
     private byte[] longBytes;
 
-    public PingRequestPacket(ByteReader reader, Direction direction) {
-        super(reader.getData(), direction);
+    public PingRequestPacket(ByteReader reader) {
+        super(reader.getData());
 
         this.longBytes = Arrays.copyOfRange(reader.getData(), 1, getData().length); // this should always be 8 bytes
     }

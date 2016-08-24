@@ -1,7 +1,6 @@
 package com.github.joshj1091.mcserver.protocol.packets.incoming;
 
-import com.github.joshj1091.mcserver.protocol.Direction;
-import com.github.joshj1091.mcserver.protocol.Packet;
+import com.github.joshj1091.mcserver.protocol.IncomingPacket;
 import com.github.joshj1091.mcserver.util.ByteReader;
 import com.github.joshj1091.mcserver.util.DataUtil;
 
@@ -27,15 +26,15 @@ import com.github.joshj1091.mcserver.util.DataUtil;
  * | Next State       | VarInt         |
  *
  */
-public class HandshakePacket extends Packet {
+public class HandshakePacket extends IncomingPacket {
 
     private final int protocolVersion;
     private final String serverAddress;
     private final int serverPort;
     private final int nextState;
 
-    public HandshakePacket(ByteReader reader, Direction direction) {
-        super(reader.getData(), direction);
+    public HandshakePacket(ByteReader reader) {
+        super(reader.getData());
 
         protocolVersion = DataUtil.readUnsignedVarInt(reader);
         serverAddress = DataUtil.readString(reader);

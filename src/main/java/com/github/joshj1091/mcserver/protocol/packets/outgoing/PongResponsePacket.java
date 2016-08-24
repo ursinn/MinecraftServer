@@ -1,7 +1,6 @@
 package com.github.joshj1091.mcserver.protocol.packets.outgoing;
 
-import com.github.joshj1091.mcserver.protocol.Direction;
-import com.github.joshj1091.mcserver.protocol.Packet;
+import com.github.joshj1091.mcserver.protocol.OutgoingPacket;
 import com.github.joshj1091.mcserver.util.DataUtil;
 
 import java.io.ByteArrayOutputStream;
@@ -16,13 +15,11 @@ import java.io.IOException;
  * -------------------------------------
  * | Long             | Long           |
  */
-public class PongResponsePacket extends Packet {
+public class PongResponsePacket extends OutgoingPacket {
 
     private byte[] longBytes;
 
     public PongResponsePacket(byte[] longBytes) {
-        super(Direction.CLIENTBOUND);
-
         this.longBytes = longBytes;
     }
 
@@ -31,6 +28,7 @@ public class PongResponsePacket extends Packet {
      * long (in bytes) from the client
      * @return byte array
      */
+    @Override
     public byte[] encode() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 

@@ -1,7 +1,6 @@
 package com.github.joshj1091.mcserver.protocol.packets.outgoing;
 
-import com.github.joshj1091.mcserver.protocol.Direction;
-import com.github.joshj1091.mcserver.protocol.Packet;
+import com.github.joshj1091.mcserver.protocol.OutgoingPacket;
 import com.github.joshj1091.mcserver.util.DataUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -9,16 +8,15 @@ import com.google.gson.JsonObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class LoginDisconnectPacket extends Packet {
+public class LoginDisconnectPacket extends OutgoingPacket {
 
     private String disconnectMessage;
 
     public LoginDisconnectPacket(String disconnectMessage) {
-        super(Direction.CLIENTBOUND);
-
         this.disconnectMessage = disconnectMessage;
     }
 
+    @Override
     public byte[] encode() {
         JsonObject payload = new JsonObject();
 

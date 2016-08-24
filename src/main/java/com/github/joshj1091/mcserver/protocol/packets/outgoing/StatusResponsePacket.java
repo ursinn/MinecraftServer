@@ -1,7 +1,6 @@
 package com.github.joshj1091.mcserver.protocol.packets.outgoing;
 
-import com.github.joshj1091.mcserver.protocol.Direction;
-import com.github.joshj1091.mcserver.protocol.Packet;
+import com.github.joshj1091.mcserver.protocol.OutgoingPacket;
 import com.github.joshj1091.mcserver.util.DataUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -16,7 +15,7 @@ import java.io.IOException;
  * More details on this packet can be found here:
  * http://wiki.vg/Server_List_Ping
  */
-public class StatusResponsePacket extends Packet {
+public class StatusResponsePacket extends OutgoingPacket {
 
     private String versionName;
     private int protocolVersion;
@@ -25,8 +24,6 @@ public class StatusResponsePacket extends Packet {
     private String descriptionText;
 
     public StatusResponsePacket(String versionName, int protocolVersion, int maxPlayers, int onlinePlayers, String descriptionText) {
-        super(Direction.CLIENTBOUND);
-
         this.versionName = versionName;
         this.protocolVersion = protocolVersion;
         this.maxPlayers = maxPlayers;
@@ -39,6 +36,7 @@ public class StatusResponsePacket extends Packet {
      * and the json string.
      * @return byte array
      */
+    @Override
     public byte[] encode() {
 
         JsonObject payload = new JsonObject();
