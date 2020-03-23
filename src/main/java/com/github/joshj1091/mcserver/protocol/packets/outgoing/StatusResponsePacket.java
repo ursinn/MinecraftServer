@@ -11,7 +11,7 @@ import java.io.IOException;
 
 /**
  * This class represents the clientbound status response packet.
- *
+ * <p>
  * More details on this packet can be found here:
  * http://wiki.vg/Server_List_Ping
  */
@@ -34,6 +34,7 @@ public class StatusResponsePacket extends OutgoingPacket {
     /**
      * This produces a byte array that contains the packet id, the number of bytes in the json string,
      * and the json string.
+     *
      * @return byte array
      */
     @Override

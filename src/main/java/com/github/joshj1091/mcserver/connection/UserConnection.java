@@ -26,9 +26,8 @@ public class UserConnection {
     private int state;
 
     /**
-     *
      * Standard Packet Format
-     *
+     * <p>
      * | Field            | Data Type      |
      * -------------------------------------
      * | Packet Size      | VarInt         |
@@ -102,16 +101,17 @@ public class UserConnection {
         }
     }
 
+    private int getState() {
+        return state;
+    }
+
     /**
      * Set the protocol state
+     *
      * @param state
      */
     private void setState(int state) {
         this.state = state;
-    }
-
-    private int getState() {
-        return state;
     }
 
     public void close() throws IOException {

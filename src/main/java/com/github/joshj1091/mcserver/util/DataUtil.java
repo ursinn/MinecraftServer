@@ -11,6 +11,7 @@ public class DataUtil {
 
     /**
      * Read an unsigned varint
+     *
      * @param in the data input
      * @return integer the number sent as a varint
      * @throws IOException if an I/O error occurs
@@ -113,10 +114,10 @@ public class DataUtil {
         List<Byte> byteList = new ArrayList<Byte>();
 
         while ((value & 0xFFFFFF80) != 0L) {
-            byteList.add((byte)((value & 0x7F) | 0x80));
+            byteList.add((byte) ((value & 0x7F) | 0x80));
             value >>>= 7;
         }
-        byteList.add((byte)(value & 0x7F));
+        byteList.add((byte) (value & 0x7F));
 
         byte[] bytes = new byte[byteList.size()];
 

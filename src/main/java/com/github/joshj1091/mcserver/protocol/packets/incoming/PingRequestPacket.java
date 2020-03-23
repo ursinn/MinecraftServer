@@ -7,22 +7,21 @@ import java.util.Arrays;
 
 /**
  * This class represents the ping request packet from the client.
- *
+ * <p>
  * Standard Packet Format
- *
+ * <p>
  * | Field            | Data Type      |
  * -------------------------------------
  * | Packet Size      | VarInt         |
  * | Packet ID        | VarInt         |
  * | Data             | Byte Array     |
- *
- *
+ * <p>
+ * <p>
  * Ping Request Data Format
- *
+ * <p>
  * | Field            | Data Type      |
  * -------------------------------------
  * | Long             | Long           |
- *
  */
 public class PingRequestPacket extends IncomingPacket {
 
@@ -36,6 +35,7 @@ public class PingRequestPacket extends IncomingPacket {
 
     /**
      * The bytes that represent the long sent from the Minecraft client
+     *
      * @return the bytes in an array
      */
     public byte[] getLongBytes() {

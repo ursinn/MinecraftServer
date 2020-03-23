@@ -2,7 +2,8 @@ package com.github.joshj1091.mcserver;
 
 import com.github.joshj1091.mcserver.connection.UserConnection;
 
-import java.io.*;
+import java.io.EOFException;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -52,6 +53,10 @@ public class MCServer {
         }.start();
     }
 
+    public static MCServer getMCServer() {
+        return instance;
+    }
+
     public void stop() {
         running = false;
         try {
@@ -59,10 +64,6 @@ public class MCServer {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-    }
-
-    public static MCServer getMCServer() {
-        return instance;
     }
 
     public void log(String message) {
