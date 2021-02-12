@@ -2,7 +2,7 @@ package com.github.joshj1091.mcserver.protocol;
 
 public abstract class IncomingPacket implements Packet {
 
-    private byte[] bytes;
+    private final byte[] bytes;
 
     public IncomingPacket(byte[] bytes) {
         this.bytes = bytes;

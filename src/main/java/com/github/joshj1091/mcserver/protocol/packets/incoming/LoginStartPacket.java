@@ -6,7 +6,7 @@ import com.github.joshj1091.mcserver.util.DataUtil;
 
 public class LoginStartPacket extends IncomingPacket {
 
-    private String name;
+    private final String name;
 
     public LoginStartPacket(ByteReader reader) {
         super(reader.getData());

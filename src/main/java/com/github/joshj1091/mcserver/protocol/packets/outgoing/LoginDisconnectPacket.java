@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class LoginDisconnectPacket extends OutgoingPacket {
 
-    private String disconnectMessage;
+    private final String disconnectMessage;
 
     public LoginDisconnectPacket(String disconnectMessage) {
         this.disconnectMessage = disconnectMessage;

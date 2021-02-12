@@ -20,7 +20,7 @@ import java.net.Socket;
 public class UserConnection {
 
     private final MCServer server = MCServer.getMCServer();
-    private Socket socket;
+    private final Socket socket;
     private boolean acceptData = true;
 
     private int state;

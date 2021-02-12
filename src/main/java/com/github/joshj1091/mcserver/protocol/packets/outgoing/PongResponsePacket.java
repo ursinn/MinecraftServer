@@ -17,7 +17,7 @@ import java.io.IOException;
  */
 public class PongResponsePacket extends OutgoingPacket {
 
-    private byte[] longBytes;
+    private final byte[] longBytes;
 
     public PongResponsePacket(byte[] longBytes) {
         this.longBytes = longBytes;

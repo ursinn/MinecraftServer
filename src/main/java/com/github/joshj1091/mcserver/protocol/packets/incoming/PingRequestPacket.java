@@ -25,7 +25,7 @@ import java.util.Arrays;
  */
 public class PingRequestPacket extends IncomingPacket {
 
-    private byte[] longBytes;
+    private final byte[] longBytes;
 
     public PingRequestPacket(ByteReader reader) {
         super(reader.getData());

@@ -17,11 +17,11 @@ import java.io.IOException;
  */
 public class StatusResponsePacket extends OutgoingPacket {
 
-    private String versionName;
-    private int protocolVersion;
-    private int maxPlayers;
-    private int onlinePlayers;
-    private String descriptionText;
+    private final String versionName;
+    private final int protocolVersion;
+    private final int maxPlayers;
+    private final int onlinePlayers;
+    private final String descriptionText;
 
     public StatusResponsePacket(String versionName, int protocolVersion, int maxPlayers, int onlinePlayers, String descriptionText) {
         this.versionName = versionName;

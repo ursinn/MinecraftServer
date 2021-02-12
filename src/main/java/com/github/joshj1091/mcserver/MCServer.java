@@ -12,7 +12,7 @@ public class MCServer {
 
     private static MCServer instance;
 
-    private ServerSocket serverSocket;
+    private final ServerSocket serverSocket;
     private boolean running = true;
 
     public MCServer() throws Exception {
