@@ -1,8 +1,6 @@
 package com.github.joshj1091.mcserver.protocol;
 
-public abstract class OutgoingPacket implements Packet {
+public interface OutgoingPacket extends Packet {
 
-    public abstract byte[] encode();
-
-    public abstract int getId();
+    byte[] encode();
 }

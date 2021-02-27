@@ -8,7 +8,7 @@ import com.google.gson.JsonObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class LoginDisconnectPacket extends OutgoingPacket {
+public class LoginDisconnectPacket implements OutgoingPacket {
 
     private final String disconnectMessage;
 

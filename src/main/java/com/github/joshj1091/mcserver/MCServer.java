@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MCServer {
 
@@ -30,14 +32,12 @@ public class MCServer {
                     new Thread(() -> {
                         try {
                             new UserConnection(socket);
+                        } catch (EOFException ex) {
+                            log("Connection terminated");
+                        } catch (SocketException ex) {
+                            log("Socket closed");
                         } catch (IOException ex) {
-                            if (ex instanceof EOFException) {
-                                log("Connection terminated");
-                            } else if (ex instanceof SocketException) {
-                                log("Socket closed");
-                            } else {
-                                ex.printStackTrace();
-                            }
+                            ex.printStackTrace();
                         }
                     }).start();
                 } catch (IOException ex) {
@@ -61,10 +61,10 @@ public class MCServer {
     }
 
     public void log(String message) {
-        System.out.println("INFO: " + message);
+        Logger.getGlobal().log(Level.INFO, message);
     }
 
     public void error(String message) {
-        System.out.println("ERROR: " + message);
+        Logger.getGlobal().log(Level.SEVERE, message);
     }
 }

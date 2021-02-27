@@ -1,9 +1,11 @@
 package com.github.joshj1091.mcserver.util;
 
+import lombok.Getter;
+
 public class ByteReader {
 
-    private final byte[] buffer;
-    private int currentPos = 0;
+    @Getter private final byte[] buffer;
+    @Getter private int currentPos = 0;
 
     public ByteReader(byte[] data) {
         this.buffer = data;
@@ -13,15 +15,7 @@ public class ByteReader {
         return currentPos <= buffer.length;
     }
 
-    public int getCurrentPos() {
-        return currentPos;
-    }
-
     public byte next() {
         return buffer[currentPos++];
-    }
-
-    public byte[] getData() {
-        return buffer;
     }
 }

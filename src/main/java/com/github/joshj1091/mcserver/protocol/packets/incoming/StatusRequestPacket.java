@@ -9,7 +9,7 @@ import com.github.joshj1091.mcserver.util.ByteReader;
 public class StatusRequestPacket extends IncomingPacket {
 
     public StatusRequestPacket(ByteReader reader) {
-        super(reader.getData());
+        super(reader.getBuffer());
     }
 
     public int getId() {

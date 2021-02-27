@@ -15,7 +15,7 @@ import java.io.IOException;
  * More details on this packet can be found here:
  * http://wiki.vg/Server_List_Ping
  */
-public class StatusResponsePacket extends OutgoingPacket {
+public class StatusResponsePacket implements OutgoingPacket {
 
     private final String versionName;
     private final int protocolVersion;

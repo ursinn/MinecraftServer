@@ -12,6 +12,8 @@ import com.github.joshj1091.mcserver.protocol.packets.outgoing.PongResponsePacke
 import com.github.joshj1091.mcserver.protocol.packets.outgoing.StatusResponsePacket;
 import com.github.joshj1091.mcserver.util.ByteReader;
 import com.github.joshj1091.mcserver.util.DataUtil;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -23,11 +25,15 @@ public class UserConnection {
     private final Socket socket;
     private boolean acceptData = true;
 
+    /**
+     * Protocol state
+     */
+    @Getter @Setter
     private int state;
 
     /**
      * Standard Packet Format
-     * <p>
+     *
      * | Field            | Data Type      |
      * -------------------------------------
      * | Packet Size      | VarInt         |
@@ -99,19 +105,6 @@ public class UserConnection {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-    }
-
-    private int getState() {
-        return state;
-    }
-
-    /**
-     * Set the protocol state
-     *
-     * @param state
-     */
-    private void setState(int state) {
-        this.state = state;
     }
 
     public void close() throws IOException {
