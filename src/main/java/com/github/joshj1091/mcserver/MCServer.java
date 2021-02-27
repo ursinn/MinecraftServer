@@ -15,7 +15,7 @@ public class MCServer {
     private final ServerSocket serverSocket;
     private boolean running = true;
 
-    public MCServer() throws Exception {
+    public MCServer() throws IOException {
         instance = this;
         log("MinecraftServer has started");
 
@@ -23,34 +23,28 @@ public class MCServer {
 
         log("Accepting connections");
 
-        new Thread() {
-            @Override
-            public void run() {
-                while (running) {
-                    try {
-                        final Socket socket = serverSocket.accept();
-                        new Thread() {
-                            @Override
-                            public void run() {
-                                try {
-                                    new UserConnection(socket);
-                                } catch (IOException ex) {
-                                    if (ex instanceof EOFException) {
-                                        log("Connection terminated");
-                                    } else if (ex instanceof SocketException) {
-                                        log("Socket closed");
-                                    } else {
-                                        ex.printStackTrace();
-                                    }
-                                }
+        new Thread(() -> {
+            while (running) {
+                try {
+                    final Socket socket = serverSocket.accept();
+                    new Thread(() -> {
+                        try {
+                            new UserConnection(socket);
+                        } catch (IOException ex) {
+                            if (ex instanceof EOFException) {
+                                log("Connection terminated");
+                            } else if (ex instanceof SocketException) {
+                                log("Socket closed");
+                            } else {
+                                ex.printStackTrace();
                             }
-                        }.start();
-                    } catch (IOException ex) {
-                        return;
-                    }
+                        }
+                    }).start();
+                } catch (IOException ex) {
+                    return;
                 }
             }
-        }.start();
+        }).start();
     }
 
     public static MCServer getMCServer() {
