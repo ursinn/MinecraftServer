@@ -35,7 +35,7 @@ public class PingRequestPacket extends IncomingPacket {
     public PingRequestPacket(ByteReader reader) {
         super(reader.getBuffer());
 
-        this.longBytes = Arrays.copyOfRange(reader.getBuffer(), 1, getData().length); // this should always be 8 bytes
+        this.longBytes = Arrays.copyOfRange(reader.getBuffer(), 1, getBytes().length); // this should always be 8 bytes
     }
 
     public int getId() {

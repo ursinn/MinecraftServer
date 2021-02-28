@@ -8,6 +8,10 @@ import com.github.joshj1091.mcserver.util.ByteReader;
 
 public class Protocol {
 
+    private Protocol() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * Get the packet type based on the state, direction and id
      *

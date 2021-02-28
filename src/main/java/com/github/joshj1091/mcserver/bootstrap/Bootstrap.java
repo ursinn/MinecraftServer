@@ -23,7 +23,6 @@ public class Bootstrap {
                 server.log("Closing now");
                 System.exit(0);
             }
-
         }
     }
 }

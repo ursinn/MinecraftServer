@@ -33,7 +33,7 @@ public class LoginDisconnectPacket implements OutgoingPacket {
             outputStream.write(messageLength);
             outputStream.write(messageBytes);
         } catch (IOException ex) {
-
+            ex.printStackTrace();
         }
 
         return outputStream.toByteArray();
