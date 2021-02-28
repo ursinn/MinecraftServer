@@ -28,12 +28,13 @@ public class UserConnection {
     /**
      * Protocol state
      */
-    @Getter @Setter
+    @Getter
+    @Setter
     private int state;
 
     /**
      * Standard Packet Format
-     *
+     * <p>
      * | Field            | Data Type      |
      * -------------------------------------
      * | Packet Size      | VarInt         |

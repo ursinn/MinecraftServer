@@ -7,17 +7,17 @@ import lombok.Getter;
 
 /**
  * This class represents the handshake packet
- *
+ * <p>
  * Standard Packet Format
- *
+ * <p>
  * | Field            | Data Type      |
  * -------------------------------------
  * | Packet Size      | VarInt         |
  * | Packet ID        | VarInt         |
  * | Data             | Byte Array     |
- *
+ * <p>
  * Handshake Data Format
- *
+ * <p>
  * | Field            | Data Type      |
  * -------------------------------------
  * | Protocol Version | VarInt         |
@@ -27,10 +27,14 @@ import lombok.Getter;
  */
 public class HandshakePacket extends IncomingPacket {
 
-    @Getter private final int protocolVersion;
-    @Getter private final String serverAddress;
-    @Getter private final int serverPort;
-    @Getter private final int nextState;
+    @Getter
+    private final int protocolVersion;
+    @Getter
+    private final String serverAddress;
+    @Getter
+    private final int serverPort;
+    @Getter
+    private final int nextState;
 
     public HandshakePacket(ByteReader reader) {
         super(reader.getBuffer());

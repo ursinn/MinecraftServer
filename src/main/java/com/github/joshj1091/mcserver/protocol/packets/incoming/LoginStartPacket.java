@@ -7,7 +7,8 @@ import lombok.Getter;
 
 public class LoginStartPacket extends IncomingPacket {
 
-    @Getter private final String name;
+    @Getter
+    private final String name;
 
     public LoginStartPacket(ByteReader reader) {
         super(reader.getBuffer());

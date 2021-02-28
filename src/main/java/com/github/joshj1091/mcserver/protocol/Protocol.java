@@ -18,7 +18,7 @@ public class Protocol {
      * @param state     the state
      * @param direction the direction of the packet
      * @param id        the id of the packet
-     * @param reader byteReader
+     * @param reader    byteReader
      * @return the type of packet
      */
     public static Packet getPacket(int state, Direction direction, ByteReader reader, int id) {

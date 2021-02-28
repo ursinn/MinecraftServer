@@ -22,5 +22,5 @@ A basic implementation of the Minecraft protocol
 
 ## License
 
-This project is under the MIT License. See the [LICENSE](https://github.com/ursinn/MinecraftServer/blob/main/LICENSE) file for the
-full license text.
+This project is under the MIT License. See the [LICENSE](https://github.com/ursinn/MinecraftServer/blob/main/LICENSE)
+file for the full license text.

@@ -8,9 +8,9 @@ import java.io.IOException;
 
 /**
  * This class represents the pong response packet that is clientbound.
- *
+ * <p>
  * Pong Response Data Format
- *
+ * <p>
  * | Field            | Data Type      |
  * -------------------------------------
  * | Long             | Long           |
