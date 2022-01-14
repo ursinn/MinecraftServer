@@ -111,7 +111,7 @@ public class DataUtil {
     }
 
     public static byte[] intToUnsignedVarInt(int value) {
-        List<Byte> byteList = new ArrayList<Byte>();
+        List<Byte> byteList = new ArrayList<>();
 
         while ((value & 0xFFFFFF80) != 0L) {
             byteList.add((byte) ((value & 0x7F) | 0x80));
