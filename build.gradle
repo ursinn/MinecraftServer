@@ -1,0 +1,121 @@
+plugins {
+    id 'java'
+    id 'signing'
+    id 'maven-publish'
+}
+
+group = 'dev.ursinn'
+version = '1.0-SNAPSHOT'
+description = 'MinecraftServer'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.8.9'
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.22'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+}
+
+def targetJavaVersion = 17
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+        options.release = targetJavaVersion
+    }
+}
+
+// Build FatJar
+jar {
+    manifest {
+        attributes "Main-Class": "com.github.joshj1091.mcserver.bootstrap.Bootstrap"
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+// Javadoc
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
+}
+
+// Publishing Stack - Start
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'mcserver'
+            from components.java
+            pom {
+                packaging = 'jar'
+                name = 'MinecraftServer'
+                description = 'A basic implementation of the Minecraft protocol'
+                url = 'https://github.com/ursinn/MinecraftServer'
+                inceptionYear = '2016'
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://github.com/ursinn/MinecraftServer/blob/main/LICENSE'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'ursinn'
+                        name = 'Ursin Filli'
+                        email = 'mail@ursinn.dev'
+                        timezone = '+1'
+                        url = 'https://ursinn.dev'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/ursinn/MinecraftServer.git'
+                    developerConnection = 'scm:git:git@github.com:ursinn/MinecraftServer.git'
+                    url = 'https://github.com/ursinn/MinecraftServer'
+                }
+                issueManagement {
+                    system = 'GitHub Issues'
+                    url = 'https://github.com/ursinn/MinecraftServer/issues'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            def releasesRepoUrl = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2'
+            def snapshotsRepoUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots'
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username ossrhS01Username
+                password ossrhS01Password
+            }
+        }
+    }
+}
+
+signing {
+    useGpgCmd()
+    sign publishing.publications.mavenJava
+}
+
+// Publishing Stack - End
