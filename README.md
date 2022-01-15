@@ -7,17 +7,12 @@
 [![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/ursinn/MinecraftServer?logo=codeclimate&style=for-the-badge)](https://codeclimate.com/github/ursinn/MinecraftServer)
 [![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/ursinn/MinecraftServer?logo=snyk&style=for-the-badge)](https://snyk.io/test/github/ursinn/MinecraftServer)
 [![License](https://img.shields.io/github/license/ursinn/MinecraftServer?style=for-the-badge)](https://github.com/ursinn/MinecraftServer/blob/main/LICENSE)
----
-
-## Description
 
 A basic implementation of the Minecraft protocol
 
 ![Server list](http://i.imgur.com/m4X3oFv.png)
 
 ![](http://i.imgur.com/c0oh6ij.png)
-
----
 
 ## License
 
