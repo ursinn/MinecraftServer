@@ -5,7 +5,8 @@
 -->
 [![GitHub last commit](https://img.shields.io/github/last-commit/ursinn/MinecraftServer?logo=github&style=for-the-badge)](https://github.com/ursinn/MinecraftServer/commits)
 [![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/ursinn/MinecraftServer?logo=codeclimate&style=for-the-badge)](https://codeclimate.com/github/ursinn/MinecraftServer)
-[![GitHub](https://img.shields.io/github/license/ursinn/MinecraftServer?style=for-the-badge)](https://github.com/ursinn/MinecraftServer/blob/main/LICENSE)
+[![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/ursinn/MinecraftServer?logo=snyk&style=for-the-badge)](https://snyk.io/test/github/ursinn/MinecraftServer)
+[![License](https://img.shields.io/github/license/ursinn/MinecraftServer?style=for-the-badge)](https://github.com/ursinn/MinecraftServer/blob/main/LICENSE)
 ---
 
 ## Description
